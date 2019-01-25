@@ -23,24 +23,35 @@ describe IconLinkDecorations do
   let(:path) { double('path') }
   let(:obj) { DummyObject.new helper_spy, object_spy }
   describe '#delete_icon' do
+    let(:options) { { method: :delete, confirm: "Delete 'my object'?" } }
 
-    it 'displays a delete icon' do
-      options = { method: :delete, confirm: "Delete 'my object'?" }
+    before(:each) do
+      expect(helper_spy).to receive(:polymorphic_path)
+        .with(object_spy)
+        .and_return(path)
+
+      end
+      it 'displays a delete icon' do
+        
+      expect(helper_spy).to receive(:link_to).with(image, path, options)
 
       expect(helper_spy).to receive(:image_tag)
         .with('cancel.png')
         .and_return(image)
 
-      expect(helper_spy).to receive(:polymorphic_path)
-        .with(object_spy)
-        .and_return(path)
-
-      expect(helper_spy).to receive(:link_to).with(image, path, options)
-
       obj.delete_icon
     end
 
     it 'displays a delete icon with text' do
+      extra_text = 'my extra text'
+      expect(helper_spy).to receive(:link_to)
+        .with("#{image} #{extra_text}", path, options)
+
+      expect(helper_spy).to receive(:image_tag)
+        .with('cancel.png')
+        .and_return(image)
+
+      obj.delete_icon extra_text
     end
   end
 
