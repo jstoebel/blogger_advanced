@@ -13,9 +13,9 @@
       <span class='tag_list'><%= article.tag_list %></span>
       <span class='actions'>
         <%= edit_icon(article) %>
-        <%= delete_icon(article) %>
+        <%= article.delete_icon %>
       </span>
-      <%= pluralize article.comments.count, "Comment" %>
+      <%= article.comments_count %>
     </li>
   <% end %>
 </ul>

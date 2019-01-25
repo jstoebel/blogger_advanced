@@ -48,6 +48,11 @@ GEM
     coffee-script-source (1.9.1)
     database_cleaner (1.4.1)
     diff-lcs (1.2.5)
+    draper (2.1.0)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0)
     erubis (2.7.0)
     execjs (2.4.0)
     fabrication (2.2.3)
@@ -122,6 +127,8 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    request_store (1.4.1)
+      rack (>= 1.4)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -183,6 +190,7 @@ DEPENDENCIES
   capybara
   coffee-rails
   database_cleaner
+  draper
   fabrication (~> 2.2.2)
   faker
   guard
@@ -195,3 +203,6 @@ DEPENDENCIES
   spring
   sqlite3
   uglifier
+
+BUNDLED WITH
+   1.16.1
