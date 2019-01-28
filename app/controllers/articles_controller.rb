@@ -1,11 +1,20 @@
 class ArticlesController < ApplicationController
   def show
     @article = ArticleDecorator.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @article }
+    end
   end
 
   def index
     articles, @tag = Article.search_by_tag_name(params[:tag])
     @articles = ArticleDecorator.decorate_collection articles
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @articles }
+    end
   end
 
   def new
