@@ -2,9 +2,9 @@ require 'spec_helper'
 
 class DummyObject
   include IconLinkDecorations
-  def initialize(helper_spy, object_spy)
+  def initialize(helper_spy, object_double)
     @helper_spy = helper_spy
-    @object_spy = object_spy
+    @object_double = object_double
   end
 
   def h
@@ -12,27 +12,25 @@ class DummyObject
   end
 
   def object
-    @object_spy
+    @object_double
   end
 end
 
 describe IconLinkDecorations do
   let(:helper_spy) { double('helper_spy') }
-  let(:object_spy) { 'my object' }
+  let(:object_double) { 'my object' }
   let(:image) { 'my image' }
   let(:path) { double('path') }
-  let(:obj) { DummyObject.new helper_spy, object_spy }
+  let(:obj) { DummyObject.new helper_spy, object_double }
   describe '#delete_icon' do
     let(:options) { { method: :delete, confirm: "Delete 'my object'?" } }
 
     before(:each) do
       expect(helper_spy).to receive(:polymorphic_path)
-        .with(object_spy)
+        .with(object_double)
         .and_return(path)
-
-      end
-      it 'displays a delete icon' do
-        
+    end
+    it 'displays a delete icon' do
       expect(helper_spy).to receive(:link_to).with(image, path, options)
 
       expect(helper_spy).to receive(:image_tag)
@@ -56,19 +54,31 @@ describe IconLinkDecorations do
   end
 
   describe '#edit_icon' do
+    before(:each) do
+      expect(helper_spy).to receive(:edit_polymorphic_path)
+        .with(object_double)
+        .and_return(path)
+    end
     it 'displays an edit icon' do
       expect(helper_spy).to receive(:image_tag)
         .with('page_edit.png')
         .and_return(image)
 
-      expect(helper_spy).to receive(:edit_polymorphic_path)
-        .with(object_spy)
-        .and_return(path)
-
       expect(helper_spy).to receive(:link_to).with(image, path)
 
       obj.edit_icon
     end
+
+    it 'displays an edit icon with text' do
+      extra_text = 'extra text'
+      expect(helper_spy).to receive(:image_tag)
+        .with('page_edit.png')
+        .and_return(image)
+
+      expect(helper_spy).to receive(:link_to)
+        .with("#{image} #{extra_text}", path)
+
+      obj.edit_icon 'extra text'
+    end
   end
 end
-
