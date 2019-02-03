@@ -6,7 +6,7 @@
 <div class='dashboard_block'>
   <h2>Most Recent Articles</h2>
   <ul>
-    <% @articles.each do |article| %>
+    <% @dashboard.articles_for_dashboard.each do |article| %>
       <li class="article"><%= link_to article.title, article %> published <%= article.created_at %></li>
     <% end %>
   </ul>
@@ -15,7 +15,7 @@
 <div class='dashboard_block'>
   <h2>Most Recent Comments</h2>
   <ul>
-    <% @comments.each do |comment| %>
+    <% @dashboard.comments_for_dashboard.each do |comment| %>
       <li class="comment">
       	<%= comment.author_name %>
       	said
@@ -32,11 +32,11 @@
 <div class="dashboard_block" id='statistics'>
   <h2>Site-Wide Statistics</h2>
   <ul>
-  	<li id='total_articles'>Total articles: <%= @article_count %></li>
-  	<li id='total_comments'>Total comments: <%= @comment_count %></li>
-  	<li id='total_article_words'>Words in all articles: <%= @article_word_count %></li>
-  	<li id='total_comment_words'>Words in all comments: <%= @comment_word_count %></li>
-  	<li id='total_words'>Total Words: <%= @article_word_count + @comment_word_count %></li>
-  	<li id='most_popular'>Most Popular Article: <%= link_to @most_popular_article.title, @most_popular_article if @most_popular_article %></li>
+  	<li id='total_articles'>Total articles: <%= @dashboard.article_count %></li>
+  	<li id='total_comments'>Total comments: <%= @dashboard.comment_count %></li>
+  	<li id='total_article_words'>Words in all articles: <%= @dashboard.article_total_word_count %></li>
+  	<li id='total_comment_words'>Words in all comments: <%= @dashboard.comment_total_word_count %></li>
+  	<li id='total_words'>Total Words: <%= @dashboard.total_words %></li>
+  	<li id='most_popular'>Most Popular Article: <%= @dashboard.article_most_popular.decorate.link_by_title if @dashboard.article_most_popular.present? %></li>
   </ul>
 </div>

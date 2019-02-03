@@ -35,18 +35,6 @@ describe Article do
     expect(Article.valid_ids).to eq Article.select(:id).collect{|a| a.id}
   end
 
-  context ".for_dashboard" do
-    it "gives the most recent 5 articles" do
-      6.times do
-        Fabricate(:article)
-      end
-      expected = Article.order('created_at DESC').limit(5).all
-      articles = Article.for_dashboard
-      expect(articles.count).to eq(5)
-      expect(articles).to eq(expected)
-    end
-  end
-
   context ".total_word_count" do
     it "gives the word count for all articles" do
       2.times { Fabricate(:article, :body => "I think that...") }

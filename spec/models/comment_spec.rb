@@ -16,19 +16,6 @@ describe Comment do
     expect(comment).to_not be_valid
   end
 
-  context ".for_dashboard" do
-    it "gives the most recent 5 comments" do
-      6.times do
-        Fabricate(:comment)
-      end
-      expected = Comment.order('created_at DESC').limit(5).all
-
-      comments = Comment.for_dashboard
-      expect(comments.count).to eq(5)
-      expect(comments).to eq(expected)
-    end
-  end
-
   context ".total_word_count" do
     it "gives the word count for all comments" do
       2.times { Fabricate(:comment, :body => "I think that...") }

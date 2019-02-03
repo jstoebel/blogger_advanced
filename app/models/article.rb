@@ -48,9 +48,9 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def self.for_dashboard
-    order('created_at DESC').limit(5)
-  end
+  # def self.for_dashboard
+  #   order('created_at DESC').limit(5)
+  # end
 
   def word_count
     body.split.count
@@ -58,7 +58,7 @@ class Article < ActiveRecord::Base
 
   def self.total_word_count
     all.inject(0) {|total, a| total += a.word_count }
-  end
+  end 
 
   def self.generate_samples(quantity = 1000)
     tags = Tag.all

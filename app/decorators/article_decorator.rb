@@ -22,4 +22,8 @@ class ArticleDecorator < ApplicationDecorator
                    end
     object.slice(*attrs_to_use).to_json
   end
+
+  def link_by_title
+    h.link_to article.title, article
+  end
 end

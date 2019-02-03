@@ -40,6 +40,14 @@ describe ArticleDecorator do
     end
   end
 
+  describe '#link_by_title' do
+    it 'renders a link to the article' do
+      article = Fabricate.build(:article).decorate
+      expect(helper).to receive(:link_to).with(article.title, article)
+      article.link_by_title
+    end
+  end
+
   def stub_current_user_is_admin(is_admin)
     allow(helper).to receive(:current_user_is_admin?)
       .and_return(is_admin.to_s == 'true')
