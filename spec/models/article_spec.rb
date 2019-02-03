@@ -97,4 +97,16 @@ describe Article do
       end
     end
   end
+
+  context '.find_or_initialize_decorated attrs' do
+    it 'returns a decorated article' do
+      article = double('article')
+      attrs = double('attrs')
+      allow(Article).to receive(:find_or_initialize_by)
+        .with(attrs)
+        .and_return(article)
+      expect(article).to receive(:decorate)
+      Article.find_or_initialize_decorated attrs
+    end
+  end
 end

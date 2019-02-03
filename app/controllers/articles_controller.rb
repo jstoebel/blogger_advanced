@@ -1,11 +1,16 @@
 class ArticlesController < ApplicationController
   def show
-    @article = ArticleDecorator.find(params[:id])
     respond_to do |format|
       format.html
-      format.json { render json: @article }
+      # TODO: add a jbuilder and remove this method
+      format.json { render json: article }
     end
   end
+
+  def article
+    @cached_article ||= Article.find_or_initialize_decorated(id: params[:id])
+  end
+  helper_method :article
 
   def index
     articles, @tag = Article.search_by_tag_name(params[:tag])
@@ -17,37 +22,29 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def new
-    @article = Article.new
-  end
-
   def create
-    @article = Article.new(article_params)
-    if @article.save
-      flash[:notice] = "Article was created."
+    a = article
+    a.assign_attributes(article_params)
+    if a.save
+      flash[:notice] = 'Article was created.'
       redirect_to articles_path
     else
       render :new
     end
   end
 
-  def edit
-    @article = Article.find params[:id]
-  end
-
   def update
-    @article = Article.find params[:id]
-    if @article.update_attributes(article_params)
-      flash[:notice] = "Article was updated."
-      redirect_to article_path(@article)
+    if article.update_attributes(article_params)
+      flash[:notice] = 'Article was updated.'
+      redirect_to article_path(article)
     else
       render :edit
     end
   end
 
   def destroy
-    article = Article.find params[:id]
-    article.destroy
+    a = article
+    a.destroy
     flash[:notice] = "#{article} was destroyed."
     redirect_to articles_path
   end

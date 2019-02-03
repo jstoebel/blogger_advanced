@@ -7,14 +7,14 @@ class Article < ActiveRecord::Base
   has_many :taggings
   has_many :tags, :through => :taggings
 
-  #default_scope :include => [:comments, :tags]
+  # default_scope :include => [:comments, :tags]
 
   def to_s
-    return title
+    title
   end
 
   def tag_list
-     tags.collect{|t| t.name}.join(", ")
+     tags.collect { |t| t.name}.join(', ')
   end
 
   def tag_list=(input)
@@ -72,5 +72,9 @@ class Article < ActiveRecord::Base
       end
       yield if block_given?
     end
+  end
+
+  def self.find_or_initialize_decorated(attrs)
+    find_or_initialize_by(attrs).decorate
   end
 end
