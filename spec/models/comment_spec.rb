@@ -15,19 +15,4 @@ describe Comment do
     comment.article_id = nil
     expect(comment).to_not be_valid
   end
-
-  context ".total_word_count" do
-    it "gives the word count for all comments" do
-      2.times { Fabricate(:comment, :body => "I think that...") }
-
-      expect(Comment.total_word_count).to eq(6)
-    end
-  end
-
-  context "#word_count" do
-    it "gives the total number of words" do
-      comment = Fabricate(:article, :body => "Four score and seven years ago...")
-      expect(comment.word_count).to eq(6)
-    end
-  end
 end

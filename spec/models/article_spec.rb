@@ -35,21 +35,6 @@ describe Article do
     expect(Article.valid_ids).to eq Article.select(:id).collect{|a| a.id}
   end
 
-  context ".total_word_count" do
-    it "gives the word count for all articles" do
-      2.times { Fabricate(:article, :body => "I think that...") }
-
-      expect(Article.total_word_count).to eq(6)
-    end
-  end
-
-  context "#word_count" do
-    it "gives the total number of words" do
-      article = Fabricate(:article, :body => "Four score and seven years ago...")
-      expect(article.word_count).to eq(6)
-    end
-  end
-
   context ".most_popular" do
     it "returns the article with the most comments" do
       articles = (0..5).collect{ Fabricate(:article) }

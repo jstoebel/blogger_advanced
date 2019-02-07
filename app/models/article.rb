@@ -1,9 +1,10 @@
 class Article < ActiveRecord::Base
+  include TextContent
+  include Commentable
   validates :title, :presence => true, :uniqueness => true
   validates :body, :presence => true
 
   belongs_to :author
-  has_many :comments
   has_many :taggings
   has_many :tags, :through => :taggings
 
@@ -51,14 +52,6 @@ class Article < ActiveRecord::Base
   # def self.for_dashboard
   #   order('created_at DESC').limit(5)
   # end
-
-  def word_count
-    body.split.count
-  end
-
-  def self.total_word_count
-    all.inject(0) {|total, a| total += a.word_count }
-  end 
 
   def self.generate_samples(quantity = 1000)
     tags = Tag.all
